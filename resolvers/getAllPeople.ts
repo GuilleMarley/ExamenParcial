@@ -3,10 +3,9 @@ import { PersonModel } from "../db/Person.ts";
 
 const getAllPeople = async (req: Request, res: Response) => {
 
-    const person = await PersonModel.find().exec();
-    const fullName = person.fullName
-    const dni = person.dni
-    res.status(200).send(fullName,dni)
+    const person = (await PersonModel.find()).map(d => (d.dni, d.fullName))
+    
+    res.status(200).send(person)
 }
 
 export default getAllPeople
